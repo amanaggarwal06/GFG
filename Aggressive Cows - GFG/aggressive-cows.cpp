@@ -10,59 +10,55 @@ using namespace std;
 class Solution {
 public:
 
-    bool issPossible(vector<int> stalls, int n, int k, int mid){
+bool isValid(vector<int> & stalls, int n, int k, int mid){
+    sort(stalls.begin(), stalls.end());
+    int cowCount = 1;
+    int cowPos = stalls[0];
+    
+    for(int i=0; i< stalls.size(); i++){
         
-        int cowCount = 1;
-        int starting_pos = stalls[0];
-        
-        for(int i=0; i<n; i++){
+        if(stalls[i] - cowPos >= mid){
+            cowCount++;
             
-            if(stalls[i] - starting_pos >= mid){
-                
-                cowCount ++ ;
-                if(cowCount == k){
-                    return true;
-                }
-                else{
-                    starting_pos = stalls[i];
-                }
-                
+            if(cowCount == k){
+                return true;
             }
-            
+            cowPos = stalls[i];
         }
-        return false;
-      
     }
+    return false;
+    
+    
+    
+}
+
     int solve(int n, int k, vector<int> &stalls) {
     
         // Write your code here
-        if(n < k){
+        if(k>n){
             return -1;
         }
         
-        sort(stalls.begin(), stalls.end());
-        int s = 0;
-        int maxi = INT_MIN;
-        for(int i=0; i<n; i++){
-            maxi = max(maxi, stalls[i]);
+        int s =0; int res = INT_MIN;
+        for(int i=0; i<stalls.size(); i++){
+            res = max(stalls[i], res);
         }
         
-        int e = maxi;
-        int mid = s + (e-s)/2; int ans= -1;
+        int e = res; int ans = -1;
+        int mid = s +(e-s)/2;
         
         while(s<=e){
             
-            if(issPossible(stalls, n , k, mid)){
-                
+            if(isValid(stalls, n, k, mid)){
                 ans = mid;
-                s = mid +1;
+                s = mid + 1;
             }
-            
             else{
-                e = mid -1;
+                e = mid - 1;
             }
-            mid = s + (e-s)/2;
+            mid = s +(e-s)/2;
         }
+        
         return ans;
     }
 };

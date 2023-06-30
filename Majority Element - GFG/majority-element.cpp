@@ -15,42 +15,26 @@ class Solution{
     // size: size of input array
     int majorityElement(int a[], int size)
     {
-        sort(a , a+ size);
-        int demo = size/2;
-        
+        int condn = size/2;
+        // your code here
         if(size==1){
             return a[0];
         }
         
-        int count = 1;
+        unordered_map<int, int> mp;
         
-        for(int i=0; i<(size-1); i++){
-            
-            if(a[i] == a[i+1]){
-                count++;
-                
-                if(count > demo ){
-                    return a[i];
-                } 
-                
-            }
-            else{
-                count = 1;
-            }
-            
-            
+        for(int i=0; i<size; i++){
+            mp[a[i]]++;
+        }
+        
+        for(auto it:mp){
+            if(it.second > condn){
+                return it.first;
+            } 
         }
         return -1;
         
-        
     }
-    
-    // solution
-    //User function template for C++
-
-
-    
-    
 };
 
 //{ Driver Code Starts.

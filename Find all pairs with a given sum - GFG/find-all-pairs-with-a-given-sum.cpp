@@ -6,27 +6,47 @@ using namespace std;
 class Solution{
     public:
     
-    // bool comp(pair<int, int> p1, pair<int, int> p2){
-    //     if(p1.first < p2.first){
-    //         return true;
-    //     }
-    //     else{
-    //         return false;
-    //     }
-    // }
+    int findreqnum(int arr[], int n, int target){
+        
+        int s=0, e= n-1, mid = s+(e-s)/2;
+        
+        while(s<=e){
+            mid = s+(e-s)/2;
+            
+            if(arr[mid] == target){
+                return mid;
+            } 
+            
+            else if(arr[mid] > target){
+                e = mid-1;
+            }
+            
+            else {
+                s = mid+1;
+            }
+        }
+        
+        return -1;
+    }
     
     vector<pair<int,int>> allPairs(int A[], int B[], int N, int M, int X)
     {
         // Your code goes here 
+        sort(B, B+M);
         vector<pair<int, int>> vec;
+        pair<int, int> p;
         
         for(int i=0; i<N; i++){
             
-            for(int j=0; j<M; j++){
+            int reqnum = X - A[i];
+            
+            int req_num_index = findreqnum(B, M, reqnum);
+            
+            if(req_num_index > -1){
                 
-                if(A[i] + B[j] == X){
-                    vec.push_back(make_pair(A[i], B[j]));
-                }
+                p.first = A[i];
+                p.second  = B[req_num_index];
+                vec.push_back(p);
             }
         }
         

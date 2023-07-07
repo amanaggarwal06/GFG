@@ -1,70 +1,69 @@
 //{ Driver Code Starts
-//Initial template for C++
-
-#include<bits/stdc++.h>
-using namespace std;
-void rotate (vector<vector<int> >& matrix);
-
+#include <bits/stdc++.h> 
+using namespace std; 
 
 // } Driver Code Ends
-//User function template for C++
 
-/* matrix : given input matrix, you are require 
- to change it in place without using extra space */
-void rotate(vector<vector<int> >& matrix)
-{
-    // Your code goes here
-    int row = matrix.size();
-    int col = matrix[0].size();
-    int total = row*col;
-    int count = 0;
-    
-    for(int i=0; i<row; i++){
+class Solution
+{   
+    public:
+    //Function to rotate matrix anticlockwise by 90 degrees.
+    void rotateby90(vector<vector<int> >& matrix, int n) 
+    { 
+        // code here 
+        if(n==1){
+            return;
+        }
         
-        for(int j=i; j<col; j++){
+        for(int i=0; i<n; i++){
+            for(int j=i ; j<n; j++){
+                
+                swap(matrix[i][j], matrix[j][i]);
+            }
+        }
+        
+        // transpose of the matrix done--
+        
+        for(int col=0; col<n; col++){
+            int strow = 0, endrow = n-1;
             
-            swap(matrix[i][j], matrix[j][i]); // matrix transpose is ready
+            while(strow< endrow){
+                swap(matrix[strow][col], matrix[endrow][col]);
+                strow++; endrow--;
+            }
         }
-    }
-    
-    for(int i=0; i<col; i++){
-        int startrow = 0, endrow = row-1;
-        
-        for(int j=0; startrow < endrow && j<row; j++){
-            swap(matrix[startrow][i], matrix[endrow][i]);
-            startrow++; endrow--;
-        }
-    }
-}
+        // rotatrion of matix by 90 is done.
+    } 
+};
 
 
 //{ Driver Code Starts.
-
-int main()
-{
+int main() {
     int t;
-    cin>>t; 
-    while(t--)
+    cin>>t;
+    
+    while(t--) 
     {
         int n;
-        cin>>n; 
-        vector<vector<int> > matrix(n);
+        cin>>n;
+        vector<vector<int> > matrix(n); 
+
         for(int i=0; i<n; i++)
         {
-            matrix[i].resize(n);
-            for(int j=0; j<n; j++)
-                cin>>matrix[i][j]; 
+            matrix[i].assign(n, 0);
+            for( int j=0; j<n; j++)
+            {
+                cin>>matrix[i][j];
+            }
         }
-        rotate(matrix);
+
+        Solution ob;
+        ob.rotateby90(matrix, n);
         for (int i = 0; i < n; ++i)
-        {
-            for(int j=0; j<n; j++)
+            for (int j = 0; j < n; ++j)
                 cout<<matrix[i][j]<<" ";
-            cout<<"\n";
-        }
+        cout<<endl;
     }
     return 0;
 }
-
-
 // } Driver Code Ends

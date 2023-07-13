@@ -5,29 +5,54 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution{
+    
+    private:
+    
+    void swapifgreater(long long arr1[], long long arr2[], int left, int right){
+        
+        if(arr1[left] > arr2[right]){
+            
+            swap(arr1[left], arr2[right]);
+        }
+    }
+    
     public:
         //Function to merge the arrays.
         void merge(long long arr1[], long long arr2[], int n, int m) 
         { 
             // code here 
-            int i = n-1, j = 0;
+            int len = n+m;
+            int gap = (n+m)/2 + (n+m)%2;
             
-            while(i>=0 && j < m){
+            while(gap > 0){
                 
-                if(arr1[i] > arr2[j]){
-                    swap(arr1[i--], arr2[j++]);
+                int left = 0;
+                int right = left + gap;
+                
+                while(right < len){
+                    
+                    if(left < n  && right >= n){
+                        
+                        swapifgreater(arr1, arr2, left, right-n);
+                    }
+                    
+                    else if(left >= n){
+                        swapifgreater(arr2, arr2, left-n, right-n);
+                    }
+                    
+                    else{
+                        swapifgreater(arr1, arr1, left , right );
+                    }
+                    
+                    right++; left++;
                 }
                 
-                else{
+                if(gap == 1){
                     break;
                 }
                 
+                gap = gap/2 + gap%2;
             }
-            
-            sort(arr1, arr1 + n);
-            sort(arr2, arr2 + m);
-            
-            
         } 
 };
 

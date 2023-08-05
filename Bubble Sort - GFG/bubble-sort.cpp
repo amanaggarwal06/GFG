@@ -20,25 +20,33 @@ void swap(int *xp, int *yp)
 
 class Solution
 {
+    
+    void BS(int arr[], int n, int round){
+        
+        //base case
+        if(round == n){
+            return;
+        }
+        
+        //processing
+        for(int i=0; i<n-round; i++){
+            
+            if(arr[i] > arr[i+1]){
+                swap(arr[i], arr[i+1]);
+            }
+        }
+        
+        //recursive case
+        BS(arr, n, round+1);
+    }
+    
     public:
     //Function to sort the array using bubble sort algorithm.
     void bubbleSort(int arr[], int n)
     {
-        // Your code here  
-        for(int i=0; i<(n-1); i++){
-            //no of rounds
-            bool sortedstate = true;
-            for(int j=0; j<(n-i-1); j++){
-                if(arr[j] > arr[j+1]){
-                    sortedstate = false;
-                    swap(arr[j], arr[j+1]);
-                }
-            }
-            
-            if(sortedstate){
-                break;
-            }
-        }
+        // Your code here 
+        BS(arr,  n, 1);
+        
     }
 };
 

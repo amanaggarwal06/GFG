@@ -10,11 +10,13 @@ using namespace std;
 
 class Solution {
     
-    void solve( vector<int> nums, int indx, int target, vector<int> output,vector<vector<int> > &ans ){
+    void solve(vector<int> nums, int indx, vector<int> output, vector<vector<int>> &ans, int target){
         
-        while ( indx+1 < nums.size() && nums[indx] == nums[indx+1]) indx = indx+1;
+        while( (indx +1 < nums.size()) && (nums[indx] == nums[indx+1]) ){
+            indx++;
+        }
         //base case
-        if(target == 0){
+        if(target==0){
             ans.push_back(output);
             return;
         }
@@ -23,16 +25,16 @@ class Solution {
         }
         
         //recursive case
-        if( target >= nums[indx] ){
-            
-            //include
+        
+        //inclusion case
+        if(nums[indx] <= target){
             output.push_back(nums[indx]);
-            solve(nums,indx, target - nums[indx], output, ans);
+            solve(nums, indx, output, ans, target - nums[indx]);
             output.pop_back();
         }
         
-        //exclusion
-        solve(nums, indx+1, target, output, ans);
+        //exclusion case
+        solve(nums, indx+1, output, ans, target);
     }
     
   public:
@@ -41,14 +43,12 @@ class Solution {
     vector<vector<int> > combinationSum(vector<int> &A, int B) {
         // Your code here
         vector<vector<int> > ans;
-        int indx = 0;
         vector<int> output;
+        int indx = 0;
+        
         sort(A.begin(), A.end());
-        
-        solve(A, indx, B, output, ans);
-        sort(ans.begin(), ans.end());
+        solve(A, indx, output, ans, B);
         return ans;
-        
     }
 };
 

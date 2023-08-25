@@ -19,49 +19,52 @@ class Solution
     //Function to sort an array using quick sort algorithm.
     void quickSort(int arr[], int low, int high)
     {
-        // code 
+        // code here
         //base case
         if(low>= high){
             return;
         }
         
-        int index = partition(arr, low, high);
+        //processing
+        int correct_indx = partition(arr, low, high);
         
         //recursive case
-        quickSort(arr, low, index-1);
-        quickSort(arr, index+1, high);
+        quickSort(arr, low, correct_indx-1);
+        quickSort(arr, correct_indx+1, high);
     }
     
     public:
     int partition (int arr[], int low, int high)
     {
        // Your code here
-       int pivotEle = arr[low]; int cnt = 0;
+       if(low == high){
+           return high;
+       }
        
+       int cnt = 0; int pivot_ele = arr[low];
        for(int i= low+1; i<= high; i++){
-           if(arr[i] <= pivotEle){
+           if(arr[i] <= pivot_ele){
                cnt++;
            }
        }
        
-       int pivotIndex = low + cnt;
-       swap(arr[low], arr[pivotIndex]);
+       int correct_indx = low+cnt;
+       swap(arr[low], arr[correct_indx]);
        
-       // left smaller elements than pivot
-       //right larger element than pivot
-       
+       //small ele arr[correct_indx]
        int i = low, j = high;
-       while(i< pivotIndex && j> pivotIndex){
+       while(i<correct_indx && j>correct_indx){
            
-           while(arr[i] <= pivotEle) i++;
-           while(arr[j] > pivotEle) j--;
+           while(arr[i] <= arr[correct_indx]) i++;
+           while(arr[j] > arr[correct_indx]) j--;
            
-           if(i< pivotIndex && j> pivotIndex){
+           if(i<correct_indx && j>correct_indx){
                swap(arr[i++], arr[j--]);
            }
+           
        }
        
-       return pivotIndex;
+       return (correct_indx);
     }
 };
 

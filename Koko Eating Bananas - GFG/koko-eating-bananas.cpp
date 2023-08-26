@@ -4,37 +4,49 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
-    bool isValid(vector<int>& piles, int H, int mid){
-        
-        int NOhours = 0;
-        for(int i=0; i< piles.size(); i++){
-            NOhours += ceil( double(piles[i]) / mid);
+    
+    int Valid(int mid, vector<int> piles, int hrs){
+
+        int hrs_cnt = 0;
+        for(int i=0; i<piles.size(); i++){
+
+            float value = piles[i];
+            hrs_cnt += ceil(value/mid);
         }
-        
-        if(NOhours > H) return false;
-        return true;
+
+        return hrs_cnt;
     }
     
   public:
-    int Solve(int N, vector<int>& piles, int H) {
+    int Solve(int N, vector<int>& piles, int h) {
         // Code here
-        int s = 0, e = *max_element(piles.begin(), piles.end());
+        int size = piles.size();
+        int start = 1, end = INT_MIN;
         
-        int mid = s+(e-s)/2, ans = 0;
+        if(size == 1 && h==1){
+            return piles[0];
+        }
+            for(int i=0; i< size; i++){
+            end = max(end, piles[i]);
+            }
         
-        while(s<=e){
-            
-            if(isValid(piles, H, mid)){
-                ans = mid;
-                e = mid-1;
+
+        long long ans = end; int mid = start + (end-start)/2;
+
+        while(start <= end ){
+
+            long long hrs_cnt = Valid(mid, piles, h);
+            if(hrs_cnt <= h){
+                ans =  mid;
+                end = mid-1;
             }
             else{
-                s = mid+1;
+                start = mid+1;
             }
-            mid = s+(e-s)/2;
+            mid = start + (end-start)/2;
         }
-        
-        return ans;
+
+        return int(ans);
     }
 };
 

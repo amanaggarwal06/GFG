@@ -9,16 +9,19 @@ class Solution {
   public:
     int nthFibonacci(int n){
         // code here
-        int first = 0, second = 1;
-        int ans = 0;
-        
-        for(int i=2; i<=n; i++){
-            ans = (first + second) % 1000000007;
-            first = (second) % 1000000007 ;
-            second = (ans) % 1000000007;
+        int first = 1, second = 1, third = 0;
+        int mod = 1000000007;
+        if(n==1 || n==2){
+            return 1;
         }
         
-        return ( ans % 1000000007 );
+        for(int i=2; i<n; i++){
+            third = (first + second) % mod ;
+            first = second % mod ;
+            second = third % mod ;
+        }
+        
+        return second;
     }
 };
 

@@ -73,27 +73,43 @@ class Solution{
     {
         // code here
         // return the head of intersection list
+        
+        //edge cases
+        if(head1 == NULL || head2 == NULL){
+            return NULL;
+        }
+        else if(head1->next == NULL && head2->next == NULL){
+            if(head1 != head2){
+                return NULL;
+            }
+            else{
+                return head1;
+            }
+        }
+        
+        Node* ans = new Node(-1);
+        Node* tail = ans;
+        unordered_map<int, bool> mp;
+        
         Node* headA = head1;
         Node* headB = head2;
-        
-        unordered_map<int, bool> mp;
         
         while(headB != NULL){
             mp[headB->data] = true;
             headB = headB->next;
         }
         
-        Node* new_list = new Node(-1); Node* tail = new_list;
-        
         while(headA != NULL){
             
             if(mp[headA->data]){
                 insertAtTail(tail, headA->data);
             }
+            
             headA = headA->next;
         }
         
-        return new_list->next;
+        
+        return ans->next;
     }
 };
 

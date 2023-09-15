@@ -87,41 +87,48 @@ struct Node
 
 class Solution
 {
-    Node* isCyclePresent(Node*head){
+    
+    Node* CyclePresent(Node* head){
         
         if(head == NULL || head->next == NULL){
             return NULL;
         }
-        else if(head->next == head){
+        else if( head->next == head){
             return head;
         }
         
-        Node*slow = head;
-        Node*fast = head;
+        Node* slow = head;
+        Node* fast = head;
         
-        while(fast!= NULL){
-            fast = fast->next;
+        while( fast != NULL ){
             
-            if(fast != NULL){
+            fast = fast->next;
+            if(fast != NULL) {
                 fast = fast->next;
             }
+            
             slow = slow->next;
             
             if(slow == fast){
                 return slow;
             }
         }
+        
         return NULL;
     }
     
-    Node* StartNode(Node*head, Node* inter){
+    Node* loophead(Node* head, Node* intersect){
         
-        while(head != inter){
-            head = head->next;
-            inter = inter->next;
+        if(intersect == head){
+            return head;
         }
         
-        return inter;
+        while( head != intersect){
+            head = head->next;
+            intersect = intersect->next;
+        }
+        
+        return intersect;
     }
     
     public:
@@ -131,21 +138,20 @@ class Solution
         // code here
         // just remove the loop without losing any nodes
         
-        //detect cycle in LL
-        Node* inter = isCyclePresent(head);
+        Node* intersect_Node = CyclePresent(head);
         
-        if(inter == NULL){
+        if(intersect_Node == NULL){
             return;
         }
         
-        Node* start_node = StartNode(head, inter);
+        Node* loop_head_node = loophead(head, intersect_Node);
+        Node* temp = intersect_Node;
         
-        while(inter->next != start_node){
-            inter = inter->next;
+        while(temp->next != loop_head_node){
+            temp = temp->next;
         }
         
-        inter->next = NULL;
-        return;
+        temp->next = NULL;
     }
 };
 

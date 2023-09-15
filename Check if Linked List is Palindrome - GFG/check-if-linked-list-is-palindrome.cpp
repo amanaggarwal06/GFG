@@ -31,39 +31,41 @@ struct Node {
 
 class Solution{
     
-    int lengthofLL(Node* head){
-        
-        if(head == NULL) return 0;
-        else if(head->next == NULL) return 1;
-        
-        int cnt = 0;
-        Node*temp = head;
-        
-        while(temp != NULL){
-            cnt++;
-            temp = temp->next;
-        }
-        
-        return cnt;
-    }
     
     Node* reverseLL(Node* head){
-        if(head->next == NULL) return head;
         
-        Node*prev = NULL;
-        Node* curr  = head;
+        Node* prev = NULL;
+        Node* fwd = NULL;
         
-       
-       while(curr != NULL){
-        Node* fwd = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = fwd;
-       }
-        
+        while(head != NULL){
+            fwd = head->next;
+            head->next = prev;
+            prev = head;
+            head = fwd;
+        }
         
         return prev;
+    }
+    
+    Node* Middle(Node* head){
         
+        Node* slow = head;
+        Node* fast = head;
+        
+        while(fast->next != NULL && fast != NULL){
+            
+            fast = fast->next;
+            if(fast->next != NULL && fast != NULL){
+                fast = fast->next;
+            }
+            else{
+                break;
+            }
+            
+            slow = slow->next;
+        }
+        
+        return slow;
     }
     
   public:
@@ -71,39 +73,26 @@ class Solution{
     bool isPalindrome(Node *head)
     {
         //Your code here
+        //edge cases
         if(head == NULL || head->next == NULL){
             return true;
         }
         
-        Node* slow = head;
-        Node* fast = head;
+        Node* middle = Middle(head);
+        middle->next = reverseLL(middle->next);
         
-        while(fast ->next != NULL && fast->next->next != NULL){
-            
-            fast = fast->next;
-            
-            if(fast != NULL){
-                fast = fast->next;
-            }
-            
-            slow = slow->next;
-        }
+        Node* temp = middle->next;
         
-        slow->next = reverseLL(slow->next);
-        
-        slow = slow->next;
-        
-        while(slow != NULL ){
-            if(head->data != slow->data){
+        while(temp != NULL){
+            if(temp->data != head->data){
                 return false;
             }
             
+            temp = temp->next;
             head = head->next;
-            slow = slow->next;
         }
         
         return true;
-        
     }
 };
 

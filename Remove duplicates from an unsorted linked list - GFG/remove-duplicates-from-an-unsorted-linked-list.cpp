@@ -43,38 +43,35 @@ class Solution
     //Function to remove duplicates from unsorted linked list.
     Node * removeDuplicates( Node *head) 
     {
-        
-        if(head == NULL || head->next == NULL){
-            return head;
-        }
-        
+     // your code goes here
      
-     unordered_map<int, bool> mp;
-     Node* curr = head;
-     Node* prev = NULL;
-     Node*fwd = curr;
-     
-     while(curr != NULL){
-         
-         while(curr != NULL && mp[curr->data]){
-             fwd = curr->next;
-             prev->next = fwd;
-             Node*temp = curr;
-             temp->next = NULL;
-             curr = fwd;
-             delete temp;
-         }
-         
-         if(curr != NULL){
-             mp[curr->data] = 1;
-             fwd = fwd->next;
-             prev = curr;
-             curr = fwd;
-         }
-        
+     //edge cases
+     if(head == NULL || head->next == NULL){
+         return head;
      }
      
-     return head;
+        unordered_map< int, bool> mp;
+        Node* temp = head; Node* prev = NULL;
+        
+        while(temp != NULL){
+            
+            if(mp[temp->data]){
+                Node* to_delete = temp;
+                prev->next = temp->next;
+                temp->next = NULL;
+                delete to_delete;
+                temp = prev->next;
+                
+            }
+            else{
+                
+                prev = temp;
+                mp[temp->data] = true;
+                temp = temp->next;
+                
+            }
+        }
+        return head;
     }
 };
 

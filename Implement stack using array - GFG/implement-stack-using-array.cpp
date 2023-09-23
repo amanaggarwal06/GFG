@@ -69,18 +69,20 @@ void MyStack :: push(int x)
     else{
         top++;
         arr[top] = x;
+        return;
     }
 }
 
 //Function to remove an item from top of the stack.
 int MyStack :: pop()
 {
-    // Your Code   
+    // Your Code  
     if(top == -1){
         return -1;
     }
-    
-    int data = arr[top];
-    top--;
-    return data;
+    else{
+        int val = arr[top];
+        top--;
+        return val;
+    }
 }

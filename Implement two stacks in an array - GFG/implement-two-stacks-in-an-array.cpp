@@ -25,48 +25,53 @@ class twoStacks
     //Function to push an integer into the stack1.
     void push1(int x)
     {
-        top1++;
         if(top1 >= size){
             return;
         }
-        
-        arr[top1] = x;
+        else{
+            top1++;
+            arr[top1] = x;
+            return;
+        }
     }
     
     //Function to push an integer into the stack2.
     void push2(int x)
     {
-        top2--;
-        
-       if(top2 >0){
-           arr[top2] = x;
+       if(top2 < 0){
            return;
        }
-       
+       top2--;
+       arr[top2] = x;
        return;
     }
     
     //Function to remove an element from top of the stack1.
     int pop1()
     {
-        if(top1 != -1){
+        if(top1 == -1){
+            return -1;
+        }
+        else{
+            
             int val = arr[top1];
             top1--;
             return val;
         }
-        return -1;
     }
     
     //Function to remove an element from top of the stack2.
     int pop2()
     {
-       if(top2 >= size){
+       if(top2 == size){
            return -1;
        }
-       
-       int val = arr[top2];
-       top2++;
-       return val;
+       else{
+           
+           int val = arr[top2];
+           top2++;
+           return val;
+       }
     }
 };
 

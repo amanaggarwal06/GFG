@@ -28,36 +28,23 @@ class Solution{
     {
        //Your code here
        int balance = 0, deficiency = 0; int start = 0;
-       vector<bool> visited(n, false);
+    //   vector<bool> visited(n, false);
        
-       for(int i=0; (i%n)<n; i++){
-           
-           i = i%n;
-           
-           if(visited[i] == false){
-               balance += p[i].petrol - p[i].distance;
-               visited[i] = true;
-           }
-           else{
-               balance = balance + deficiency;
-               if(balance >=0){
-                   return start;
-               }
-               else{
-                   return -1;
-               }
-           }
+       for(int i=0; (i)<n; i++){
            
            
-           if(balance < 0){
-               start = (i+1)%n;
+            balance += p[i].petrol - p[i].distance;
+            
+            if(balance < 0){
+               start = (i+1);
                deficiency += balance;
                balance = 0;
            }
            
        }
        
-       return start;
+       if(deficiency + balance >= 0) return start;
+       return -1;
     }
 };
 

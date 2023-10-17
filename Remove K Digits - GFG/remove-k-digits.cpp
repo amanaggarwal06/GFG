@@ -13,33 +13,40 @@ class Solution {
         
         string ans;
         int length = S.length();
+        stack <char> st;
         
         for(int i=0; i< length; i++){
             
             char ch = S[i];
             
-            while( !ans.empty() && ch < ans.back() && k>0){
-                ans.pop_back();
+            while( !st.empty() && ch < st.top() && k>0){
+               st.pop();
                 k--;
             }
             
-            if(ans.empty() && ch != '0'){
-                ans.push_back(ch);
+            if(st.empty() && ch != '0'){
+                st.push(ch);
             }
-            else if( !ans.empty() ){
-                ans.push_back(ch);
+            else if( !st.empty() ){
+                st.push(ch);
             }
         }
         
-        while( !ans.empty() && k>0){
-            ans.pop_back();
+        while( !st.empty() && k>0){
+            st.pop();
             k--;
         }
         
-        if(ans.empty()){
+        if(st.empty()){
             return "0";
         }
         
+        while(!st.empty()){
+            ans.push_back( st.top() );
+            st.pop();
+        }
+        
+        reverse(ans.begin(), ans.end());
         return ans;
     }
 };
